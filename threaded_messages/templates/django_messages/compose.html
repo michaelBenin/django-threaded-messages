@@ -4,11 +4,11 @@
 {% load uni_form_tags %}
 
 
-{% block css_block %}
+{% block extra_head %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/token-input.css" type="text/css" />
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>{% trans "Compose Message"|upper %}</h1>
     
     <form action="" method="post" class="uniForm">
@@ -22,10 +22,9 @@
     </form>
 {% endblock %}
 
-{% block extra_body %}
+{% block extra_js %}
     {{ block.super }}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tokeninput.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
     
     <script type="text/javascript">
         $().ready(function() {

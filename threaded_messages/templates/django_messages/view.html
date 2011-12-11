@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 
-{% block body %}
+{% block content %}
  <div class="prefix_1 grid_10">
     <h2>
         {{ thread.subject }}
@@ -67,10 +67,9 @@
 </div>
 {% endblock %}
 
-{% block extra_body %}
+{% block extra_js %}
     {{ block.super }}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.5.2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
      <script type="text/javascript">
          $(document).ready(function(){
              $('.reply-form').ajaxForm({
