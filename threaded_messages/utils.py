@@ -74,12 +74,12 @@ def reply_to_thread(thread,sender, body):
                 reply_email = sendgrid_parse_api.utils.create_reply_email(tm_settings.THREADED_MESSAGES_ID, r, thread)
                 notification.send(recipients, "received_email", 
                                         {"thread": thread,
-                                         "message": new_message}, sender=sender,
+                                         "message": new_message},
                                         from_email=reply_email.get_reply_email())
             else:
                 notification.send([r], "received_email", 
                                     {"thread": thread,
-                                     "message": new_message}, sender=sender)
+                                     "message": new_message})
         
     return (thread, new_message)
 
