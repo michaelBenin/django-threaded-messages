@@ -22,7 +22,7 @@ import logging
 
 
 @login_required
-def inbox(request, template_name='django_messages/inbox.html'):
+def inbox(request, template_name='messages/inbox.html'):
     """
     Displays a list of received messages for the current user.
     Optional Arguments:
@@ -52,7 +52,7 @@ def inbox(request, template_name='django_messages/inbox.html'):
 
 
 @login_required
-def search(request, template_name="django_messages/search.html"):
+def search(request, template_name="messages/search.html"):
     from haystack.query import SearchQuerySet #include here, so the dependency is only needed when used
     search_term = request.GET.get("q")
     results = SearchQuerySet().filter(content=search_term,
@@ -66,7 +66,7 @@ def search(request, template_name="django_messages/search.html"):
 
 
 @login_required
-def outbox(request, template_name='django_messages/inbox.html'):
+def outbox(request, template_name='messages/inbox.html'):
     """
     Displays a list of sent messages by the current user.
     Optional arguments:
@@ -78,7 +78,7 @@ def outbox(request, template_name='django_messages/inbox.html'):
     }, context_instance=RequestContext(request))
 
 @login_required
-def trash(request, template_name='django_messages/trash.html'):
+def trash(request, template_name='messages/trash.html'):
     """
     Displays a list of deleted messages.
     Optional arguments:
@@ -93,7 +93,7 @@ def trash(request, template_name='django_messages/trash.html'):
 
 @login_required
 def compose(request, recipient=None, form_class=ComposeForm,
-        template_name='django_messages/compose.html', success_url=None, recipient_filter=None):
+        template_name='messages/compose.html', success_url=None, recipient_filter=None):
     """
     Displays and handles the ``form_class`` form to compose new messages.
     Required Arguments: None
@@ -176,7 +176,7 @@ def undelete(request, thread_id, success_url=None):
 
 @login_required
 def view(request, thread_id, form_class=ReplyForm,
-        success_url=None, recipient_filter=None, template_name='django_messages/view.html'):
+        success_url=None, recipient_filter=None, template_name='messages/view.html'):
     """
     Shows a single message.``message_id`` argument is required.
     The user is only allowed to see the message, if he is either
@@ -267,7 +267,7 @@ def batch_update(request, success_url=None):
 
 @login_required
 def message_ajax_reply(request, thread_id,
-                  template_name="django_messages/message_list_view.html"):
+                  template_name="messages/message_list_view.html"):
     thread = get_object_or_404(Thread, id=thread_id)
     if request.POST:
         form = ReplyForm(request.POST)
