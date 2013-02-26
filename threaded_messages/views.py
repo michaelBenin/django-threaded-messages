@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import datetime
 from django.contrib.auth import load_backend, login, BACKEND_SESSION_KEY
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
