@@ -208,7 +208,10 @@ def view(request, thread_id, form_class=ReplyForm,
         form = form_class()
 
     now = datetime.datetime.now()
-    participant = get_object_or_404(Participant, thread=thread, user=request.user)
+    try:
+        participant = get_object_or_404(Participant, thread=thread, user=request.user)
+    except MultipleObjectsReturned:
+        participant = Participant.objects.filter(thread=thread, user=request.user)[0]
     message_list = []
     # in this view we want the last message last
     for message in thread.all_msgs.all().order_by("sent_at"):
