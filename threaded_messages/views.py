@@ -41,7 +41,7 @@ def inbox(request, template_name='django_messages/inbox.html'):
         only_unreplied = True
 
     thread_list = Participant.objects.inbox_for(request.user, read=read, only_unreplied=only_unreplied)
-        
+
     return render_to_response(template_name, {
         'thread_list': thread_list,
         'only_read': only_read,
@@ -62,8 +62,8 @@ def search(request, template_name="django_messages/search.html"):
                                   "thread_results": results,
                                   "search_term": search_term,
                                 }, context_instance=RequestContext(request))
-    
-    
+
+
 @login_required
 def outbox(request, template_name='django_messages/inbox.html'):
     """
@@ -79,7 +79,7 @@ def outbox(request, template_name='django_messages/inbox.html'):
 @login_required
 def trash(request, template_name='django_messages/trash.html'):
     """
-    Displays a list of deleted messages. 
+    Displays a list of deleted messages.
     Optional arguments:
         ``template_name``: name of the template to use
     Hint: A Cron-Job could periodicly clean up old messages, which are deleted
@@ -131,11 +131,11 @@ def delete(request, thread_id, success_url=None):
     """
     Marks a message as deleted by sender or recipient. The message is not
     really removed from the database, because two users must delete a message
-    before it's save to remove it completely. 
-    A cron-job should prune the database and remove old messages which are 
+    before it's save to remove it completely.
+    A cron-job should prune the database and remove old messages which are
     deleted by both users.
     As a side effect, this makes it easy to implement a trash with undelete.
-    
+
     You can pass ?next=/foo/bar/ via the url to redirect the user to a different
     page (e.g. `/foo/bar/`) than ``success_url`` after deletion of the message.
     """
@@ -148,7 +148,7 @@ def delete(request, thread_id, success_url=None):
         success_url = request.GET['next']
     elif success_url is None:
         success_url = reverse('messages_inbox')
-    
+
     user_part.deleted_at = now
     user_part.save()
     return HttpResponseRedirect(success_url)
@@ -178,16 +178,16 @@ def view(request, thread_id, form_class=ReplyForm,
         success_url=None, recipient_filter=None, template_name='django_messages/view.html'):
     """
     Shows a single message.``message_id`` argument is required.
-    The user is only allowed to see the message, if he is either 
+    The user is only allowed to see the message, if he is either
     the sender or the recipient. If the user is not allowed a 404
-    is raised. 
-    If the user is the recipient and the message is unread 
+    is raised.
+    If the user is the recipient and the message is unread
     ``read_at`` is set to the current datetime.
-    """    
+    """
 
     user = request.user
     thread = get_object_or_404(Thread, id=thread_id)
-  
+
     """
     Reply stuff
     """
@@ -246,12 +246,12 @@ def batch_update(request, success_url=None):
                     participant.save()
         else:
             raise Http404
-        
+
     else:
         # this should only happen when hacked or developer uses wrong, therefore
         # return simple message
         return HttpResponse("Only Post allowed", code=400)
-        
+
     if success_url:
         return HttpResponseRedirect(success_url)
     else:
@@ -261,8 +261,8 @@ def batch_update(request, success_url=None):
             return HttpResponseRedirect(referer)
         else:
             return HttpResponseRedirect(reverse("messages_inbox"))
-            
-            
+
+
 
 @login_required
 def message_ajax_reply(request, thread_id,
@@ -276,7 +276,7 @@ def message_ajax_reply(request, thread_id,
             except Exception, e:
                 logging.exception(e)
                 return HttpResponse(status=500, content="Message could not be sent")
-                
+
             return render_to_response(template_name,{
                 "message": new_message,
             }, context_instance=RequestContext(request))
