@@ -143,7 +143,10 @@ def delete(request, thread_id, success_url=None):
     user = request.user
     now = datetime.datetime.now()
     thread = get_object_or_404(Thread, id=thread_id)
-    user_part = get_object_or_404(Participant, user=user, thread=thread)
+    try:
+        user_part = get_object_or_404(Participant, user=user, thread=thread)
+    except MultipleObjectReturned:
+        user_part = Participant.objects.filter(user = user, thread = thread)[0]
 
     if request.GET.has_key('next'):
         success_url = request.GET['next']
