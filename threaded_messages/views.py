@@ -145,7 +145,7 @@ def delete(request, thread_id, success_url=None):
     thread = get_object_or_404(Thread, id=thread_id)
     try:
         user_part = get_object_or_404(Participant, user=user, thread=thread)
-    except MultipleObjectReturned:
+    except MultipleObjectsReturned:
         user_part = Participant.objects.filter(user = user, thread = thread)[0]
 
     if request.GET.has_key('next'):
